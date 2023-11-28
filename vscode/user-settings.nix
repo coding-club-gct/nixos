@@ -12,4 +12,5 @@
       "default" = true;
     }
   ];
+  "editor.wordWrap" = "on";
 }

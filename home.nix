@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -57,10 +57,65 @@
     userName = "useEffects";
     userEmail = "joel.sr1024@gmail.com";
   };
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Catppuccin-Mocha-Standard-Mauve-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        variant = "mocha";
+        accents = [ "mauve" ];
+        size = "standard";
+        tweaks = [ "rimless" "normal" ];
+      };
+    };
+    gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+  };
+  home.sessionVariables.GTK_THEME = "Catppuccin-Mocha-Standard-Mauve-Dark";
   nixpkgs = {
     config = {
       allowUnfree = true;
       allowUnfreePredicate = (_:true);
     };
   };
+  dconf.settings = {
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = [
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
+        "trayIconsReloaded@selfmade.pl"
+        "quick-settings-tweaks@qwreey"
+      ];
+    };
+    "org/gnome/extensions/user-theme" = {
+      name = "'Catppuccin-Mocha-Standard-Mauve-Dark'";
+    };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "'prefer-dark'";
+    };
+    "org/gnome/desktop/background" = {
+      "picture-uri" = "file:///${config.home.homeDirectory}/.config/home-manager/wallpaper/wp11912480-catppuccin-wallpapers.png";
+      "picture-uri-dark" = "file:///${config.home.homeDirectory}/.config/home-manager/wallpaper/wp11912480-catppuccin-wallpapers.png";
+    };
+  };
+  xdg =
+    let
+      themeDir = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+    in
+    lib.mkIf config.gtk.enable {
+      configFile."gtk-4.0/assets" = {
+        source = "${themeDir}/gtk-4.0/assets";
+        recursive = true;
+      };
+      configFile."gtk-4.0/gtk.css".source = "${themeDir}/gtk-4.0/gtk.css";
+      configFile."gtk-4.0/gtk-dark.css".source = "${themeDir}/gtk-4.0/gtk-dark.css";
+    };
 }

@@ -1,6 +1,6 @@
 { pkgs }:
 
-let 
+let
   python-packages = ps: with ps; [
     pandas
     requests
@@ -21,4 +21,9 @@ with pkgs; [
   jdk17
   neofetch
   zsh
+  hyprland
+  gnomeExtensions.user-themes
+  gnomeExtensions.tray-icons-reloaded
+  gnomeExtensions.quick-settings-tweaker
+  catppuccin-gtk
 ]

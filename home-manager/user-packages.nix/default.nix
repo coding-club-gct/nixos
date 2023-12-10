@@ -18,10 +18,10 @@ with pkgs; [
   nodePackages."yarn"
   gcc
   git
-  jdk17
+  openjdk17
   neofetch
   zsh
-  hyprland
+  gnome.gnome-tweaks
   gnomeExtensions.user-themes
   gnomeExtensions.tray-icons-reloaded
   gnomeExtensions.quick-settings-tweaker

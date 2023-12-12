@@ -68,6 +68,13 @@
         tweaks = [ "rimless" "normal" ];
       };
     };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "mauve";
+      };
+    };
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
@@ -95,15 +102,18 @@
         "quick-settings-tweaks@qwreey"
       ];
     };
-    "org/gnome/extensions/user-theme" = {
-      name = "'Catppuccin-Mocha-Standard-Mauve-Dark'";
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Catppuccin-Mocha-Standard-Mauve-Dark";
     };
     "org/gnome/desktop/interface" = {
-      color-scheme = "'prefer-dark'";
+      color-scheme = "prefer-dark";
     };
     "org/gnome/desktop/background" = {
       "picture-uri" = "file:///etc/nixos/home-manager/wallpaper/wp11912480-catppuccin-wallpapers.png";
       "picture-uri-dark" = "file:///etc/nixos/home-manager/wallpaper/wp11912480-catppuccin-wallpapers.png";
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = ":minimize,maximize,close";
     };
   };
   xdg =
